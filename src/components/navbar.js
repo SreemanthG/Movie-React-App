@@ -3,7 +3,7 @@ import axios from 'axios';
 import ReactDOM from 'react-dom';
 import { render } from '@testing-library/react';
 
-export default function Item(props){
+export default function Navbar(props){
     // http://www.omdbapi.com/?apikey=90bfa9a&s=Aquaman
     const [searchmovies, setSearchMovies] = useState();
     function searchMovie(e){

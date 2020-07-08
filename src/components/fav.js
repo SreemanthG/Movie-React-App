@@ -1,37 +1,14 @@
 import React from 'react';
 import axios from 'axios';
-export default class Item extends React.Component{
+export default class Fav extends React.Component{
     //Api - http://www.omdbapi.com/?apikey=90bfa9a
     // http://www.omdbapi.com/?apikey=90bfa9a&t=Aquaman
 
     // state = {
     //     movies: []
     //   }
-    addFavorite(e){
-        axios.get(`http://www.omdbapi.com/?apikey=90bfa9a&i=${e.target.id}`)
-        .then(res => {
-          const searchmovie = res.data;
-          searchmovie.isFav = true;
-        //   console.log(searchmovie)
-            this.props.store.dispatch({
-            type:"ADDFAV",
-            payload:searchmovie
-          })
-        })
-    }
-    componentDidMount(){
-        // axios.get(`http://www.omdbapi.com/?apikey=90bfa9a&s=Aquaman`)
-        // .then(res => {
-        //   const movies = res.data.Search;
-        //   console.log(movies)
-        //   this.setState({ movies });
-        // })
-        // this.props.store.dispatch({
-        //     type:"ADDMOVIE",
-        //     payload:"Hello"
-        //   })
-    }
-    renderMovieItems(){
+   
+    renderFavItems(){
         // console.log(this.state.movies);
         // var currentstate = this.props.getState()
 

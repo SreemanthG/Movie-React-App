@@ -1,5 +1,23 @@
 import React from 'react';
-export default function Navbuttons(){
+import ReactDOM from 'react-dom';
+import Item from "./item"
+import Fav from "./fav"
+export default function Navbuttons(props){
+    function renderMovie(e){
+        ReactDOM.render(
+            <item store={props.store}/>
+            ,
+            document.getElementById('main')
+          );
+          
+    } 
+    function renderFav(e){
+        ReactDOM.render(
+            <Fav store={props.store}/>
+            ,
+            document.getElementById('main')
+          );
+    }
     const styles = {
         
         nav:{
@@ -13,15 +31,16 @@ export default function Navbuttons(){
             backgroundColor:"#24a0ed",
             border:0,
             color:"white",
-            borderRadius:4
-        }
+            borderRadius:4,
+            marginRight:10,
+        },
     }
     return(
         <div>
             <div>
                 <div style={styles.nav} >
-                <button style={styles.button} >Click Me</button>
-                <button style={styles.button} >Click Me</button>
+                <button style={styles.button} onClick={renderMovie}>Movies</button>
+                <button style={styles.button} onClick={renderFav}>Is Favorite</button>
                     
                 </div>
             </div>
