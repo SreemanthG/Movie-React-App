@@ -4,14 +4,35 @@ import './App.css';
 import Navbar from './components/navbar';
 import Item from './components/item';
 import NavButtons from './components/navbuttons'
+import {createStore} from "redux"
+import { act } from 'react-dom/test-utils';
 
+const reducer = (state={movies:[]},action)=>{
+    switch(action.type){
+      case "ADDMOVIE":
+        state = {
+            movies:[...state.movies,action.payload]
+        }
+        // state.movies.push(action.payload)
+        break;
+      case "Hello":
+        break;
+    }
+    return state;
+};
+
+const store = createStore(reducer,{movies:[]})
+
+store.subscribe(()=>{
+  console.log(store.getState())
+})
 
 function App() {
   return (
     <div className="App">
-      <Navbar/>
+      <Navbar store={store}/>
       {/* <NavButtons /> */}
-      <Item />
+      <Item store={store}/>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
