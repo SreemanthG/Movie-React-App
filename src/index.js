@@ -11,6 +11,7 @@ const onereducer = (state={movies:[]},action)=>{
       state = {
           movies:[...state.movies,action.payload],
       }
+      
       // state.movies.push(action.payload)
       break;
   }

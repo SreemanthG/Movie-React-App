@@ -11,6 +11,15 @@ class Item extends React.Component{
     //   }
    
   saveFav(id){ 
+    var check=false;
+    var state = this.props.store.getState();
+
+    state.fav.fav.forEach((movie) => {
+        if(movie.imdbID ==id){
+            check=true
+        }
+    })
+    if(!check){
       return axios.get(`http://www.omdbapi.com/?apikey=90bfa9a&i=${id}`)
             .then(res => {
               const searchmovie = res.data;
@@ -23,6 +32,7 @@ class Item extends React.Component{
                 payload:searchmovie
               })
             })
+        }
   }
     addFavorite(e){
         axios.get(`http://www.omdbapi.com/?apikey=90bfa9a&i=${e.target.id}`)

@@ -22,17 +22,30 @@ export default function Navbar(props){
     function clearSearch(e){
         e.target.value = ""
     }
-
+    function removeDuplicates(data){
+        return data.fiter((value,index) => data.indexOf(value) === index)
+    }
     function addMovie(e){
+        var check=false;
+        console.log("Hello");
+        var state = props.store.getState();
+        state.movies.movies.forEach((movie) => {
+            if(movie.imdbID ==e.target.id){
+                check=true
+            }
+        })
+        if(!check){
         axios.get(`http://www.omdbapi.com/?apikey=90bfa9a&i=${e.target.id}`)
         .then(res => {
-          const searchmovie = res.data;
+            const searchmovie = res.data;
+            
         //   console.log(searchmovie)
             props.store.dispatch({
             type:"ADDMOVIE",
             payload:searchmovie
           })
         })
+    }
     }
     
     function renderSearchMovies(){
