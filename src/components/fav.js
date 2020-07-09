@@ -9,26 +9,33 @@ class Fav extends React.Component{
     // state = {
     //     movies: []
     //   }
-    // checkDup(id){
-    //     this.props.fav.fav.forEach((fav, index, arr)=>{
-    //         if(fav.imdbID ===id && fav.isFav){
-    //             console.log("skipped")
-    //             return index
-    //         }
-    //     })  
-    // }
-    remFavorite(e){
+    checkDup(id){
+        this.props.fav.fav.forEach((fav, index, arr)=>{
+            if(fav.imdbID ===id && fav.isFav){
+                return index
+            }
+        })  
+    }
+    remFavorite(e,rem){
+        rem.fav.fav.splice(this.checkDup(e.target.id),1);
         
-        // this.props.store.getState().fav.fav.splice(this.checkDup(e.target.id),1);
-        // console.log(rem)
+        this.props.store.dispatch({
+            type:"ADDFAV",
+            payload:rem.fav
+          })
+          console.log("skipped")
+
+          console.log(this.props.fav)
     }
     favItems(movie){
         console.log("Entered Fav")
         console.log(movie);
-        
+        if(movie.Title){
+        console.log("Entered sdfsdfs")
+            
             return (<div style={this.styles.card}>
                 <div style={this.styles.image}>
-                    {console.log("name"+ movie.Title)}
+              
                     <img style={{width:"100%",height:"100%"}} src={movie.Poster} />
                 </div>
                 <div style={this.styles.content}>
@@ -36,16 +43,18 @@ class Fav extends React.Component{
                     <p>{movie.Type} </p>
     
                     <h2>{movie.year}</h2>
-                    {/* <button style={this.styles.button} onClick={this.remFavorite} >Remove Fav</button> */}
+                    <button style={this.styles.button} onClick={(e)=>this.remFavorite(e,this.props)} >Remove Fav</button>
                 </div>
-            </div>)
+            </div>)}
     
     }
     renderFavItems(){
         console.log("hello")
         console.log(this.props.movies);
         // var currentstate = this.props.getState()
+        if(this.props.store.getState().fav.fav!=[]){
         return this.props.store.getState().fav.fav.map(movie =>(this.favItems(movie)) )
+        }
     }
     
     styles = {
