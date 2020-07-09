@@ -20,8 +20,8 @@ class Fav extends React.Component{
         rem.fav.fav.splice(this.checkDup(e.target.id),1);
         
         this.props.store.dispatch({
-            type:"ADDFAV",
-            payload:rem.fav
+            type:"REMFAV",
+            payload:rem.fav.fav
           })
           console.log("skipped")
 
@@ -43,6 +43,7 @@ class Fav extends React.Component{
                     <p>{movie.Type} </p>
     
                     <h2>{movie.year}</h2>
+                    
                     <button style={this.styles.button} onClick={(e)=>this.remFavorite(e,this.props)} >Remove Fav</button>
                 </div>
             </div>)}

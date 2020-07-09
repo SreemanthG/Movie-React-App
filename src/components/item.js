@@ -56,6 +56,7 @@ class Item extends React.Component{
 
                 <h2>{movie.imdbRating}</h2>
                 <h3>{movie.Year}</h3>
+                
                 <button style={this.styles.button}  id={movie.imdbID} onClick={()=> this.saveFav(movie.imdbID)} >Add to Fav</button>
             </div>
         </div>) )

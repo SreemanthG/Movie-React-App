@@ -23,6 +23,11 @@ const tworeducer = (state={fav:[]},action)=>{
         fav:[...state.fav,action.payload]
       }
       break;
+      case "REMFAV":
+      state = {
+        fav:[...action.payload]
+      }
+      break;
   }
   return state;
 };
