@@ -5,7 +5,7 @@ import Fav from "./fav"
 export default function Navbuttons(props){
     function renderMovie(e){
         ReactDOM.render(
-            <item store={props.store}/>
+            <Item store={props.store}/>
             ,
             document.getElementById('main')
           );

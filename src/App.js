@@ -7,36 +7,36 @@ import NavButtons from './components/navbuttons'
 import {createStore} from "redux"
 import { act } from 'react-dom/test-utils';
 
-const reducer = (state={movies:[]},action)=>{
-    switch(action.type){
-      case "ADDMOVIE":
-        state = {
-            movies:[...state.movies,action.payload]
-        }
-        // state.movies.push(action.payload)
-        break;
-      case "ADDFAV":
-        state = {
-          movies:[...state.movies,action.payload]
-        }
-        break;
-    }
-    return state;
-};
+// const reducer = (state={movies:[]},action)=>{
+//     switch(action.type){
+//       case "ADDMOVIE":
+//         state = {
+//             movies:[...state.movies,action.payload]
+//         }
+//         // state.movies.push(action.payload)
+//         break;
+//       case "ADDFAV":
+//         state = {
+//           movies:[...state.movies,action.payload]
+//         }
+//         break;
+//     }
+//     return state;
+// };
 
-const store = createStore(reducer,{movies:[]})
+// const store = createStore(reducer,{movies:[]})
 
-store.subscribe(()=>{
-  console.log(store.getState())
-})
+// store.subscribe(()=>{
+//   console.log(store.getState())
+// })
 
-function App() {
+function App(props) {
   return (
     <div className="App">
-      <Navbar store={store}/>
-      <NavButtons store={store}/>
+      <Navbar store={props.store}/>
+      <NavButtons store={props.store}/>
       <div id="main">
-      <Item store={store}/>
+      <Item store={props.store}/>
 
       </div>
 

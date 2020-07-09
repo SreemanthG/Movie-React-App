@@ -3,11 +3,42 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import {createStore,combineReducers} from "redux"
+import {Provider  } from 'react-redux';
+const onereducer = (state={movies:[]},action)=>{
+  switch(action.type){
+    case "ADDMOVIE":
+      state = {
+          movies:[...state.movies,action.payload],
+      }
+      // state.movies.push(action.payload)
+      break;
+  }
+  return state;
+};
+const tworeducer = (state={fav:[]},action)=>{
+  switch(action.type){
+    case "ADDFAV":
+      state = {
+        fav:[...state.fav,action.payload]
+      }
+      break;
+  }
+  return state;
+};
+
+
+const store = createStore(combineReducers({movies:onereducer,fav:tworeducer}))
+
+store.subscribe(()=>{
+console.log("State")
+console.log(store.getState())
+})
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <App  store={store}/>
+  </Provider>,
   document.getElementById('root')
 );
 

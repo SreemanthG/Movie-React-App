@@ -1,52 +1,62 @@
 import React from 'react';
 import axios from 'axios';
-export default class Item extends React.Component{
+import {connect} from 'react-redux'
+import thunk from 'redux-thunk'
+class Item extends React.Component{
     //Api - http://www.omdbapi.com/?apikey=90bfa9a
     // http://www.omdbapi.com/?apikey=90bfa9a&t=Aquaman
 
     // state = {
     //     movies: []
     //   }
+   
+  saveFav(id){ 
+      return axios.get(`http://www.omdbapi.com/?apikey=90bfa9a&i=${id}`)
+            .then(res => {
+              const searchmovie = res.data;
+              searchmovie.isFav = true;
+              console.log("isfav "+ searchmovie.isFav)
+            
+            //   console.log(searchmovie)
+              this.props.store.dispatch({
+                type:"ADDFAV",
+                payload:searchmovie
+              })
+            })
+  }
     addFavorite(e){
         axios.get(`http://www.omdbapi.com/?apikey=90bfa9a&i=${e.target.id}`)
         .then(res => {
           const searchmovie = res.data;
           searchmovie.isFav = true;
         //   console.log(searchmovie)
-            this.props.store.dispatch({
-            type:"ADDFAV",
-            payload:searchmovie
-          })
+        //    return {
+        //     type:"ADDFAV",
+        //     payload:searchmovie
+        //   }
+        this.props.saveFav(searchmovie)
         })
     }
-    componentDidMount(){
-        // axios.get(`http://www.omdbapi.com/?apikey=90bfa9a&s=Aquaman`)
-        // .then(res => {
-        //   const movies = res.data.Search;
-        //   console.log(movies)
-        //   this.setState({ movies });
-        // })
-        // this.props.store.dispatch({
-        //     type:"ADDMOVIE",
-        //     payload:"Hello"
-        //   })
-    }
+
+   
     renderMovieItems(){
         // console.log(this.state.movies);
         // var currentstate = this.props.getState()
-
-        console.log("hello "+ this.props.store.getState())
-        return this.props.store.getState().movies.map(movie =>( <div style={this.styles.card}>
+        console.log( "hellos")
+        
+        console.log( this.props)
+        return this.props.movies.movies.map(movie =>( <div style={this.styles.card}>
             <div style={this.styles.image}>
-                {console.log("name"+ movie.Title)}
+       
                 <img style={{width:"100%",height:"100%"}} src={movie.Poster} />
             </div>
             <div style={this.styles.content}>
                 <h1>{movie.Title}</h1>
-                <p>{movie.Type} </p>
+                <p>{movie.Plot} </p>
 
-                <h2>{movie.year}</h2>
-                <button style={this.styles.button} onClick={this.addFavorite} >Add to Fav</button>
+                <h2>{movie.imdbRating}</h2>
+                <h3>{movie.Year}</h3>
+                <button style={this.styles.button}  id={movie.imdbID} onClick={()=> this.saveFav(movie.imdbID)} >Add to Fav</button>
             </div>
         </div>) )
     }
@@ -159,3 +169,35 @@ export default class Item extends React.Component{
 
    
 }
+
+
+//     axios.get(`http://www.omdbapi.com/?apikey=90bfa9a&i=${id}`)
+//         .then(res => {
+//           const searchmovie = res.data;
+//           searchmovie.isFav = true;
+//           console.log(searchmovie)
+//            return {
+//             type:"ADDFAV",
+//             payload:searchmovie
+//           }
+//         })
+//     // console.log(movie)
+//     //     return {
+//     //         type:"ADDFAV",
+//     //         payload:movie
+//     //       }
+// }
+const mapStateToProps = state => ({
+    movies: state.movies,
+    fav:state.fav
+  });
+
+const mapDispatchToProps = () => {
+    return {
+    //   saveFav
+    };
+  };
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps()
+  )(Item);
