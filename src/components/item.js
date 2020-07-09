@@ -47,8 +47,23 @@ class Item extends React.Component{
         this.props.saveFav(searchmovie)
         })
     }
+    checkDup(id){
+        this.props.movies.movies.forEach((fav, index, arr)=>{
+            if(fav.imdbID ===id && fav.isFav){
+                return index
+            }
+        })  
+    }
+    remFavorite(e,rem){
+        rem.movies.movies.splice(this.checkDup(e.target.id),1);
+        
+        this.props.store.dispatch({
+            type:"REMMOV",
+            payload:rem.movies.movies
+          })
 
-   
+          console.log(this.props.fav)
+    }
     renderMovieItems(){
         // console.log(this.state.movies);
         // var currentstate = this.props.getState()
@@ -68,6 +83,7 @@ class Item extends React.Component{
                 <h3>{movie.Year}</h3>
                 
                 <button style={this.styles.button}  id={movie.imdbID} onClick={()=> this.saveFav(movie.imdbID)} >Add to Fav</button>
+                <button style={this.styles.button} onClick={(e)=>this.remFavorite(e,this.props)} >Remove Movie</button>
             </div>
         </div>) )
     }

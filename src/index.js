@@ -14,6 +14,11 @@ const onereducer = (state={movies:[]},action)=>{
       
       // state.movies.push(action.payload)
       break;
+      case "REMMOV":
+        state = {
+          movies:[...action.payload]
+        }
+        break;
   }
   return state;
 };
@@ -33,8 +38,19 @@ const tworeducer = (state={fav:[]},action)=>{
   return state;
 };
 
+const threereducer = (state={searchmovies:[]},action)=>{
+  switch(action.type){
+    case "SEARCH":
+      state = {
+        searchmovies:[action.payload]
+      }
+      break;
+     
+  }
+  return state;
+};
 
-const store = createStore(combineReducers({movies:onereducer,fav:tworeducer}))
+const store = createStore(combineReducers({movies:onereducer,fav:tworeducer,search:threereducer}))
 
 store.subscribe(()=>{
 console.log("State")

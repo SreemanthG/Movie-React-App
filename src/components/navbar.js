@@ -2,16 +2,22 @@ import React,{ useState } from 'react';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
 import { render } from '@testing-library/react';
-
+import {useSelector} from 'react-redux'
 export default function Navbar(props){
     // http://www.omdbapi.com/?apikey=90bfa9a&s=Aquaman
-    const [searchmovies, setSearchMovies] = useState();
+    // const [searchmovies, setSearchMovies] = useState();
+    const searchmovies = useSelector(state=>state.search.searchmovies);
     function searchMovie(e){
+    console.log(searchmovies);
+
         axios.get(`http://www.omdbapi.com/?apikey=90bfa9a&s=${e.target.value}`)
         .then(res => {
-          const searchmovies = res.data;
-          setSearchMovies({ searchmovies });
-          
+          const searchmovie1 = res.data;
+        //   setSearchMovies({ searchmovies });
+            props.store.dispatch({
+            type:"SEARCH",
+            payload:searchmovie1
+          })
         //   ReactDOM.render(
         //     renderSearchMovies(),
         //     document.getElementById('search')
@@ -49,15 +55,15 @@ export default function Navbar(props){
     }
     
     function renderSearchMovies(){
+        console.log(searchmovies)
   
+        if(searchmovies[0]){
 
-        if(searchmovies){
-        console.log(searchmovies.searchmovies.Response)
-
-            if(searchmovies.searchmovies.Response=="True"){
+            if(searchmovies[0].Response=="True"){
 
 
-        return searchmovies.searchmovies.Search.map(movie =>(<div style={styles.card}>
+        return searchmovies[0].Search.map(movie =>(<div style={styles.card}>
+            
             <div style={styles.image}>
             <img style={{width:"100%",height:"100%"}} src={movie.Poster} />
             </div>
